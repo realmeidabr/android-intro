@@ -1,5 +1,6 @@
 package me.realmeidabr.mobile_android_intro
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -17,17 +18,22 @@ class MainActivity : AppCompatActivity() {
         val tvResult = findViewById<TextView>(R.id.tvResult)
         // New code block for click listener
         btSend.setOnClickListener {
-            /*if (tvResult.text == "Hello Gorgeous!") {
-                tvResult.text = "Hello Stranger!"
-            } else {
-                tvResult.text = "Hello Gorgeous!"
-            }*/
-            if (etUserInput.text.isEmpty()) {
-                etUserInput.error = "This field is required!"
+
+            if (etUserInput.text.isBlank()) {
+                etUserInput.error = getString(R.string.field_required)
             } else {
                 tvResult.text = etUserInput.text.toString()
                 etUserInput.text = null
             }
+        }
+
+        val btOpen = findViewById<Button>(R.id.btOpen)
+
+        btOpen.setOnClickListener {
+            val newScreenIntent = Intent(this, ResultActivity::class.java)
+            val typedName = tvResult.text //.toString()
+            newScreenIntent.putExtra("TYPED_NAME", typedName)
+            startActivity(newScreenIntent)
         }
     }
 }
